@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.ViewAppointFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+            <Button
+                android:textAllCaps="false"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_border"
+                android:id="@+id/listView"
+                android:text="All Entries List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/assignmentCalendar"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

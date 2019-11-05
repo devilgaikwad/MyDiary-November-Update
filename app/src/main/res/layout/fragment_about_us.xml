@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingBottom="?actionBarSize"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_xlarge"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/grey_90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Diary"
+                app:fontFamily="sans-serif-light" />
+
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="120.0dip"
+                android:layout_height="3.0dip"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/spacing_large" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Version" />
+
+                <TextView
+                    android:id="@+id/versionName"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.24.0.11.1" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/spacing_large" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Update" />
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="February 2019" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/spacing_large" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="What's New ?" />
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enhance Designing. \n Calender Bugs Fixed. \n Other Back End Bug Fixed." />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/spacing_mxlarge" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Founder / Director" />
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/eng_ajay_gaikwad" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/spacing_mxlarge" />
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

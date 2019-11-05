@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linearlayout2"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvDayWish"
+            android:layout_margin="20dp"
+            android:fontFamily="serif"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:text="Good Morning Ajay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivLoc"
+                android:visibility="gone"
+                android:layout_marginHorizontal="5dp"
+                android:src="@drawable/ic_loca"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:id="@+id/tvLoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:id="@+id/updateLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/faint_blue"
+                app:cardCornerRadius="10dp"
+                app:cardUseCompatPadding="true"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="15dp"
+                        android:src="@drawable/appointment"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif"
+                            android:text="New Update Available"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:fontFamily="sans-serif"
+                            android:text="We have fixed some issue and added some cool features in this update"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/updateLeter"
+                            android:background="@drawable/button_borderless"
+                            android:text="later"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <Button
+                            android:id="@+id/updateDownload"
+                            android:background="@drawable/button_borderless"
+                            android:text="Download"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:background="@drawable/button_border"
+                android:text="Add to Dairy"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/tvView"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:background="@drawable/button_border"
+                android:text="View All Entry"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvToday"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:background="@drawable/button_border"
+                android:text="Today's Entry"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/tvMonth"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:background="@drawable/button_border"
+                android:text="This Month Entry"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

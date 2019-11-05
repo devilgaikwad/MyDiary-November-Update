@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+       <!-- <iammert.com.library.ConnectionStatusView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:dismissOnComplete="true" />-->
+
+        <TextView
+            android:textColor="@color/black"
+            android:fontFamily="cursive"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:text="Add to Diary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/dateselect"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                android:text="Select Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/timeselect"
+                    android:textColor="@color/black"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Time Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <Spinner
+                android:id="@+id/bTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="35dp">
+
+            <AutoCompleteTextView
+                android:fontFamily="serif"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="35dp"
+                android:hint="To Whom"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:id="@+id/nameAuto"
+                >
+
+            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="35dp">
+
+                <AutoCompleteTextView
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="serif"
+                    android:minHeight="35dp"
+                    android:id="@+id/et_desc"
+                    android:hint="Enter Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="35dp">
+
+                <EditText
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="serif"
+                    android:minHeight="35dp"
+                    android:maxLines="1"
+                    android:id="@+id/et_amount"
+                    android:hint="Enter Amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_gravity="right"
+                android:foregroundGravity="right"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <Button
+                android:background="@drawable/button_border"
+                android:textSize="8dp"
+                android:id="@+id/btnSelectImage"
+                android:textAllCaps="false"
+                android:layout_marginHorizontal="5dp"
+                android:text="Select Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:fontFamily="serif"
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_margin="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Add"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            custom:pb_colorComplete="@color/green_complete"
+            custom:pb_colorNormal="@color/blue_normal"
+            custom:pb_colorPressed="@color/blue_pressed"
+            custom:pb_colorProgress="@color/purple_progress"
+            custom:pb_textComplete="Success"
+            custom:pb_textProgress="Loading"
+            custom:pb_textError="Error"
+            custom:pb_colorError="@color/red_error" />
+
+
+    </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
