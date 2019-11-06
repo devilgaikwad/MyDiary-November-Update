@@ -37,6 +37,7 @@ import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -47,10 +48,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.ajaygaikwad.mydiary.Classes.MyApplication;
 import com.ajaygaikwad.mydiary.Classes.SharedPref;
@@ -133,6 +135,8 @@ public class AddAppointmentFragment extends Fragment {
     private ContactDAO mContactDAO;
     List<Contact> contacts;
     //StatusView statusView;
+    LinearLayout llAddImage,llSignature;
+    ImageView ivClose;
 
     public AddAppointmentFragment() {
         // Required empty public constructor
@@ -151,7 +155,44 @@ public class AddAppointmentFragment extends Fragment {
         btnSelectImage = v.findViewById(R.id.btnSelectImage);
         BounceView.addAnimTo(btnSelectImage);
         imageView = v.findViewById(R.id.imageView);
+        llAddImage = v.findViewById(R.id.llAddImage);
+        llSignature = v.findViewById(R.id.llSignature);
+        ivClose = v.findViewById(R.id.ivClose);
+        llSignature.setVisibility(View.GONE);
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putString("encodedSignString","");
+                editor.commit();
+
+
+                Fragment fragment = new AddAppointmentFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                if(preferences.getString("view","").equals("2")){
+                    ft.replace(R.id.container,  fragment).addToBackStack("").commit();
+                }else{
+                    ft.replace(R.id.fmain,  fragment).addToBackStack("").commit();
+                }
+
+            }
+        });
         //statusView = v.findViewById(R.id.status);
+
+        String encodedSignString = preferences.getString("encodedSignString","");
+        if(!encodedSignString.trim().equals(""))
+        {
+            llSignature.setVisibility(View.VISIBLE);
+            encodedProfilePhotoString = encodedSignString;
+
+            byte[] bytes = Base64.decode(encodedSignString, Base64.DEFAULT);
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            Glide.with(getActivity().getApplicationContext())
+                    .load(bitmap)
+                    //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                    .into(imageView);
+        }
 
 
 
@@ -316,8 +357,42 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                checkpermission();
-                showImagePicker();
+                PopupMenu popupMenu  = new PopupMenu(getActivity(),btnSelectImage);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.menuPhoto:
+
+                                checkpermission();
+                                showImagePicker();
+
+                                return true;
+                            case R.id.menuSignature:
+
+                                /*Intent in = new Intent(getActivity(), SignActivity.class);
+                                startActivity(in);*/
+
+                                Fragment fragment = new SignFragment();
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+                                if(preferences.getString("view","").equals("2")){
+                                    ft.replace(R.id.container,  fragment).addToBackStack("").commit();
+                                }else{
+                                    ft.replace(R.id.fmain,  fragment).addToBackStack("").commit();
+                                }
+                                return true;
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+
+
             }
         });
 
@@ -338,7 +413,6 @@ public class AddAppointmentFragment extends Fragment {
             format = "AM";
         }
     }
-
 
     private void addAppointMethod() {
 
@@ -399,6 +473,9 @@ public class AddAppointmentFragment extends Fragment {
                                 btn_add.setText("Added Successfully");
                                 btn_add.setEnabled(false);
                                 nameList.add(nameAuto.getText().toString());
+
+                                editor.putString("encodedSignString","");
+                                editor.commit();
 
                                 //Toast.makeText(getActivity(), "Added to Diary Successfully", Toast.LENGTH_SHORT).show();
 
@@ -466,7 +543,6 @@ public class AddAppointmentFragment extends Fragment {
         postRequest1.setShouldCache(false);
         MyApplication.getInstance().addToReqQueue(postRequest1);
     }
-
 
     private void AlertBox() {
         if(result22.equals("1")) {
@@ -746,8 +822,6 @@ public class AddAppointmentFragment extends Fragment {
                                                         byte[] imageBytes = byteArrayOutputStream.toByteArray();
                                                         encodedProfilePhotoString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
-
-
                                                     //new EncodePhoto().execute();
                                                     dialog.dismiss();
                                                 }
@@ -783,7 +857,6 @@ public class AddAppointmentFragment extends Fragment {
                     //Toast.makeText(getActivity(), "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
                     Toasty.error(getActivity(), "Permission Denied\n" + deniedPermissions.toString()).show();
                 }
-
 
             };
 
