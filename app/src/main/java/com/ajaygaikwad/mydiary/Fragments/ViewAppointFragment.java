@@ -102,7 +102,6 @@ public class ViewAppointFragment extends Fragment {
                 }catch (Exception e){
                     ft.replace(R.id.container,  fragment).addToBackStack("tag").commit();
                 }
-
             }
         });
         getAppointmentMethod();
