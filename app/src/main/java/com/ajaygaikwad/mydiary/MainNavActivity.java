@@ -159,10 +159,11 @@ public class MainNavActivity extends AppCompatActivity
                     pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent a = new Intent(Intent.ACTION_MAIN);
+                            /*Intent a = new Intent(Intent.ACTION_MAIN);
                             a.addCategory(Intent.CATEGORY_HOME);
                             a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(a);
+                            startActivity(a);*/
+                            finish();
                             finishAffinity();
                         }
                     });
@@ -178,10 +179,11 @@ public class MainNavActivity extends AppCompatActivity
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    Intent a = new Intent(Intent.ACTION_MAIN);
+                                    /*Intent a = new Intent(Intent.ACTION_MAIN);
                                     a.addCategory(Intent.CATEGORY_HOME);
                                     a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(a);
+                                    startActivity(a);*/
+                                    finish();
                                     finishAffinity();
                                 }
                             }).create().show();
@@ -255,6 +257,7 @@ public class MainNavActivity extends AppCompatActivity
             editor.commit();
            Intent in = new Intent(getApplicationContext(),SlidingRootNavActivity.class);
            startActivity(in);
+           finish();
 
         }
         else if (id == R.id.nav_share) {

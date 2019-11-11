@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import hari.bounceview.BounceView;
 
 public class SlidingRootNavActivity extends AppCompatActivity {
 
@@ -36,7 +40,7 @@ public class SlidingRootNavActivity extends AppCompatActivity {
     Context context;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    TextView homeTab,addToDiaryTab,viewDiaryTab,aboutTab,changeUI,logOutTab;
+    TextView homeTab,addToDiaryTab,viewDiaryTab,aboutTab,changeUI,logOutTab,amountBalance,amountBalanceEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,11 @@ public class SlidingRootNavActivity extends AppCompatActivity {
         aboutTab = findViewById(R.id.aboutTab);
         changeUI = findViewById(R.id.changeUI);
         logOutTab = findViewById(R.id.logOutTab);
+        amountBalance = findViewById(R.id.amountBalance);
+        amountBalanceEdit = findViewById(R.id.amountBalanceEdit);
+
+        publicMethod();
+
 
         setAttributes(homeTab);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -127,10 +136,45 @@ public class SlidingRootNavActivity extends AppCompatActivity {
                 editor.commit();
                 Intent in = new Intent(getApplicationContext(),MainNavActivity.class);
                 startActivity(in);
+                finish();
             }
         });
 
+        amountBalanceEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SlidingRootNavActivity.this);
+// ...Irrelevant code for customizing the buttons and title
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.alert_label_editor, null);
+                dialogBuilder.setView(dialogView);
+
+                final EditText et_bal = dialogView.findViewById(R.id.et_bal);
+                Button btn_bal = dialogView.findViewById(R.id.btn_bal);
+                final AlertDialog alertDialog = dialogBuilder.create();
+                BounceView.addAnimTo(alertDialog);
+                alertDialog.show();
+
+                btn_bal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int amounttoadd = Integer.parseInt(et_bal.getText().toString());
+                        //int finalAmountBal = amountBal - amounttoadd;
+                        editor.putInt("AMOUNT_BALANCE",amounttoadd);
+                        editor.commit();
+                        alertDialog.dismiss();
+                        publicMethod();
+                    }
+                });
+            }
+        });
+    }
+
+    public void publicMethod() {
+        int amtt = preferences.getInt("AMOUNT_BALANCE",100);
+        amountBalance.setText(String.valueOf(amtt));
     }
 
     public void setActionBarTitle (String title){
@@ -155,7 +199,7 @@ public class SlidingRootNavActivity extends AppCompatActivity {
 
         if(slidingRootNav.isMenuOpened()){
             slidingRootNav.closeMenu();
-        }
+        }else {
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
             if (f instanceof HomeFragment) {
                 try {
@@ -167,10 +211,11 @@ public class SlidingRootNavActivity extends AppCompatActivity {
                     pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent a = new Intent(Intent.ACTION_MAIN);
+                            /*Intent a = new Intent(Intent.ACTION_MAIN);
                             a.addCategory(Intent.CATEGORY_HOME);
                             a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(a);
+                            startActivity(a);*/
+                            finish();
                             finishAffinity();
                         }
                     });
@@ -186,18 +231,16 @@ public class SlidingRootNavActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    Intent a = new Intent(Intent.ACTION_MAIN);
-                                    a.addCategory(Intent.CATEGORY_HOME);
-                                    a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(a);
+                                    finish();
                                     finishAffinity();
                                 }
                             }).create().show();
                 }
-            }else{
+            } else {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.container,  new HomeFragment()).addToBackStack("").commit();
+                ft.replace(R.id.container, new HomeFragment()).addToBackStack("").commit();
             }
+        }
         }
 
     @Override

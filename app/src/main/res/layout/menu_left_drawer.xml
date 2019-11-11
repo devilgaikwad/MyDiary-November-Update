@@ -34,10 +34,24 @@
             android:text="@string/balance_currency" />
 
         <TextView
+            android:fontFamily="monospace"
+            android:id="@+id/amountBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/balance_amount"
             android:textSize="34sp" />
+
+        <TextView
+            android:fontFamily="monospace"
+            android:textColor="@color/blue"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:id="@+id/amountBalanceEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -55,7 +69,7 @@
         android:paddingRight="10dp">
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,11 +82,11 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:gravity="center_vertical"
                 android:textColor="@color/black1"
                 android:id="@+id/homeTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:fontFamily="monospace"
                 android:text="Home"
                 android:textSize="15dp" />
@@ -86,7 +100,7 @@
             android:layout_height="1dp"/>-->
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -99,11 +113,11 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:gravity="center_vertical"
                 android:textColor="@color/black1"
                 android:id="@+id/addToDiaryTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:fontFamily="monospace"
                 android:text="Add to Diary"
                 android:textSize="15dp" />
@@ -133,9 +147,9 @@
             <TextView
                 android:textColor="@color/black1"
                 android:id="@+id/viewDiaryTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:fontFamily="monospace"
                 android:text="View Diary"
                 android:textSize="15dp"/>
@@ -150,7 +164,6 @@
 
         <LinearLayout
             android:layout_marginBottom="15dp"
-
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -165,9 +178,9 @@
             <TextView
                 android:textColor="@color/black1"
                 android:id="@+id/aboutTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:fontFamily="monospace"
                 android:text="About Us"
                 android:textSize="15dp" />
@@ -190,9 +203,9 @@
             <TextView
                 android:textColor="@color/black1"
                 android:id="@+id/changeUI"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:fontFamily="monospace"
                 android:text="Change UI"
                 android:textSize="15dp" />

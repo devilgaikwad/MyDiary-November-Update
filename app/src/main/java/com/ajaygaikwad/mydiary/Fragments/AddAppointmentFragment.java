@@ -476,6 +476,30 @@ public class AddAppointmentFragment extends Fragment {
 
                                 editor.putString("encodedSignString","");
                                 editor.commit();
+                                int amountBal = preferences.getInt("AMOUNT_BALANCE",  100);
+                                int amounttoadd = Integer.parseInt(et_amount.getText().toString());
+
+                                if(businessType.equals("Expense")) {
+                                    int finalAmountBal = amountBal - amounttoadd;
+                                    editor.putInt("AMOUNT_BALANCE", finalAmountBal);
+                                    editor.commit();
+                                    try {
+                                        ((SlidingRootNavActivity)getActivity()).publicMethod();
+                                    } catch (Exception e) { }
+                                }
+                                else if(businessType.equals("Credit")) {
+                                    int finalAmountBal = amountBal + amounttoadd;
+                                    editor.putInt("AMOUNT_BALANCE", finalAmountBal);
+                                    editor.commit();
+                                    try {
+                                        ((SlidingRootNavActivity)getActivity()).publicMethod();
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+
+
+
 
                                 //Toast.makeText(getActivity(), "Added to Diary Successfully", Toast.LENGTH_SHORT).show();
 
@@ -491,7 +515,6 @@ public class AddAppointmentFragment extends Fragment {
                                 AlertBox();
                                 //Toast.makeText(getActivity(), "Diary Set Error", Toast.LENGTH_SHORT).show();
                             }
-
 
                         } catch (Exception e) {
                             //progressBar.dismiss();
