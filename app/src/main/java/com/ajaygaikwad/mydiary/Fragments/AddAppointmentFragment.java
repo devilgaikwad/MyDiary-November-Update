@@ -71,6 +71,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -138,6 +142,8 @@ public class AddAppointmentFragment extends Fragment {
     LinearLayout llAddImage,llSignature;
     ImageView ivClose;
 
+    private InterstitialAd mInterstitialAd;
+
     public AddAppointmentFragment() {
         // Required empty public constructor
     }
@@ -159,6 +165,19 @@ public class AddAppointmentFragment extends Fragment {
         llSignature = v.findViewById(R.id.llSignature);
         ivClose = v.findViewById(R.id.ivClose);
         llSignature.setVisibility(View.GONE);
+
+        MobileAds.initialize(getActivity(), "ca-app-pub-3864681863166960~2667252138");
+        mInterstitialAd = new InterstitialAd(getActivity());
+        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        //mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build());
+        mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener(){
+            public void onAdLoaded(){
+                mInterstitialAd.show();
+            }
+        });
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -579,9 +598,13 @@ public class AddAppointmentFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         pDialog.dismissWithAnimation();
+                        mInterstitialAd.setAdListener(new AdListener(){
+                            public void onAdLoaded(){
+                                mInterstitialAd.show();
+                            }
+                        });
                         Fragment fragment = new AddAppointmentFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
                         if(preferences.getString("view","").equals("2")){
                             ft.replace(R.id.container,  fragment).addToBackStack("").commit();
                         }else{

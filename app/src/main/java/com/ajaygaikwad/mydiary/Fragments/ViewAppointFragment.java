@@ -30,6 +30,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
@@ -59,6 +64,7 @@ public class ViewAppointFragment extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ArrayList<AppointmentItem> list;
+    private AdView mAdView;
 
     public ViewAppointFragment() {
         // Required empty public constructor
@@ -104,6 +110,14 @@ public class ViewAppointFragment extends Fragment {
                 }
             }
         });
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = v.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         getAppointmentMethod();
 
         InitCalendar(savedInstanceState);
@@ -141,7 +155,7 @@ public class ViewAppointFragment extends Fragment {
 
         try {
             FragmentTransaction t = getFragmentManager().beginTransaction();
-            t.add(R.id.assignmentCalendar, caldroidFragment);
+            t.replace(R.id.assignmentCalendar, caldroidFragment).disallowAddToBackStack();
             t.commit();
         }catch (Exception e){}
         // Setup listener

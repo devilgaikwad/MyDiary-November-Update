@@ -6,7 +6,45 @@
     android:background="@color/blue_50"
     android:layout_margin="20dp">
 
+    <TextView
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:text="Wallet Balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvMunus"
+                android:layout_marginHorizontal="30dp"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:background="@drawable/circle_shape"
+                android:text="-"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvplus"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:background="@drawable/circle_shape"
+            android:text="+"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

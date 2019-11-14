@@ -99,6 +99,16 @@ public class HomeFragment extends Fragment implements LocationListener {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
 
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = v.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
         updateLL=v.findViewById(R.id.updateLL);
         updateLeter=v.findViewById(R.id.updateLeter);
         updateDownload=v.findViewById(R.id.updateDownload);

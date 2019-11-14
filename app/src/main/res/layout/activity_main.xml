@@ -115,7 +115,7 @@
             custom:pb_colorError="@color/red_error" />
 
         <TextView
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:id="@+id/register"
             android:textStyle="bold"
             android:text="Register"

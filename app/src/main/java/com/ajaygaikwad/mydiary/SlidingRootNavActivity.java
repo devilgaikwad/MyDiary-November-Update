@@ -41,6 +41,8 @@ public class SlidingRootNavActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     TextView homeTab,addToDiaryTab,viewDiaryTab,aboutTab,changeUI,logOutTab,amountBalance,amountBalanceEdit;
+    String status="";
+    int amounttoadd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,10 +142,12 @@ public class SlidingRootNavActivity extends AppCompatActivity {
             }
         });
 
+
         amountBalanceEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                status="";
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SlidingRootNavActivity.this);
 // ...Irrelevant code for customizing the buttons and title
                 LayoutInflater inflater = getLayoutInflater();
@@ -152,6 +156,26 @@ public class SlidingRootNavActivity extends AppCompatActivity {
 
                 final EditText et_bal = dialogView.findViewById(R.id.et_bal);
                 Button btn_bal = dialogView.findViewById(R.id.btn_bal);
+                final TextView tvMunus = dialogView.findViewById(R.id.tvMunus);
+                final TextView tvPlus = dialogView.findViewById(R.id.tvplus);
+
+                tvMunus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvMunus.setBackgroundResource(R.drawable.circle_shape_red);
+                        tvPlus.setBackgroundResource(R.drawable.circle_shape);
+                        status = "minus";
+                    }
+                });
+
+                tvPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvPlus.setBackgroundResource(R.drawable.circle_shape_green);
+                        tvMunus.setBackgroundResource(R.drawable.circle_shape);
+                        status = "plus";
+                    }
+                });
                 final AlertDialog alertDialog = dialogBuilder.create();
                 BounceView.addAnimTo(alertDialog);
                 alertDialog.show();
@@ -160,12 +184,30 @@ public class SlidingRootNavActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        int amounttoadd = Integer.parseInt(et_bal.getText().toString());
-                        //int finalAmountBal = amountBal - amounttoadd;
-                        editor.putInt("AMOUNT_BALANCE",amounttoadd);
-                        editor.commit();
-                        alertDialog.dismiss();
-                        publicMethod();
+                        if(status.equalsIgnoreCase("")){
+                            Toast.makeText(getApplicationContext(),"Select Plus Or Minus",Toast.LENGTH_LONG).show();
+                            return;
+                        }else {
+
+                            try {
+                                 amounttoadd = Integer.parseInt(et_bal.getText().toString());
+                            }catch (Exception e){
+                                    amounttoadd =0;
+                            }
+
+                            int amountBal = preferences.getInt("AMOUNT_BALANCE", 0);
+                            if (status.equalsIgnoreCase("plus")) {
+                                int finalAmountBal = amountBal + amounttoadd;
+                                editor.putInt("AMOUNT_BALANCE", finalAmountBal);
+                            } else if (status.equalsIgnoreCase("minus")) {
+                                final int finalAmountBal = amountBal - amounttoadd;
+                                editor.putInt("AMOUNT_BALANCE", finalAmountBal);
+                            }
+
+                            editor.commit();
+                            alertDialog.dismiss();
+                            publicMethod();
+                        }
                     }
                 });
             }
@@ -173,8 +215,9 @@ public class SlidingRootNavActivity extends AppCompatActivity {
     }
 
     public void publicMethod() {
-        int amtt = preferences.getInt("AMOUNT_BALANCE",100);
+        int amtt = preferences.getInt("AMOUNT_BALANCE",0);
         amountBalance.setText(String.valueOf(amtt));
+        status="";
     }
 
     public void setActionBarTitle (String title){

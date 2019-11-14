@@ -81,11 +81,8 @@ public class MainActivity extends AppCompatActivity {
         BounceView.addAnimTo(register);
 
         MobileAds.initialize(this, "ca-app-pub-3864681863166960~2667252138");
-
         mInterstitialAd = new InterstitialAd(this);
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
-
         //mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build());
         mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -312,10 +309,12 @@ public class MainActivity extends AppCompatActivity {
     private void AlertBox() {
             try {
                 final SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE);
-                pDialog.setTitle("User Banned");
-                pDialog.setContentText("You are temporarily banned for using My Diary App. Please contact our customer executive for further details");
+                //pDialog.setTitle("User Banned");
+                pDialog.setTitle("Incorrect credentials.");
+                //pDialog.setContentText("You are temporarily banned for using My Diary App. Please contact our customer executive for further details");
+                pDialog.setContentText("Mobile or password is incorrect.");
                 pDialog.show();
-                pDialog.setConfirmButton("Contact", new SweetAlertDialog.OnSweetClickListener() {
+                /*pDialog.setConfirmButton("Contact", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         pDialog.dismissWithAnimation();
@@ -330,6 +329,14 @@ public class MainActivity extends AppCompatActivity {
                         }catch (Exception e){
                             Toasty.info(getApplicationContext(), "Contact to ajaygaikwad945@gmail.com");
                         }
+
+                    }
+                });*/
+
+                pDialog.setConfirmButton("OKEY", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        pDialog.dismissWithAnimation();
 
                     }
                 });

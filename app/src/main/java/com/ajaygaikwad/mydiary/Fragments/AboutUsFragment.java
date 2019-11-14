@@ -1,12 +1,15 @@
 package com.ajaygaikwad.mydiary.Fragments;
 
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +37,7 @@ public class AboutUsFragment extends Fragment {
     }
 
     TextView versionName;
+    private AdView mAdView;
 
 
     @Override
@@ -43,9 +47,28 @@ public class AboutUsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_about_us, container, false);
         versionName = v.findViewById(R.id.versionName);
 
+        PackageManager manager = getActivity().getPackageManager();
+        PackageInfo info = null;
+        try {
+            info = manager.getPackageInfo(getActivity().getPackageName(), PackageManager.GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        /*Toast.makeText(getActivity(),
+                "PackageName = " + info.packageName + "\nVersionCode = "
+                        + info.versionCode + "\nVersionName = "
+                        + info.versionName + "\nPermissions = " + info.permissions, Toast.LENGTH_SHORT).show();*/
+
         versionName.setText(BuildConfig.VERSION_NAME);
 
-
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = v.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         return v;
