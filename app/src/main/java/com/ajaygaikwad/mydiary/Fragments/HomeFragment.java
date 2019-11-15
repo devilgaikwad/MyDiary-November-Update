@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -40,6 +41,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -75,6 +78,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     LocationManager locationManager;
     TextView tvLoc;
     ImageView ivLoc;
+    View v;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,7 +89,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_home, container, false);
+        v= inflater.inflate(R.layout.fragment_home, container, false);
         preferences= PreferenceManager.getDefaultSharedPreferences(getContext());
         editor=preferences.edit();
         //MobileAds.initialize(getActivity(), "ca-app-pub-3864681863166960~2667252138");
@@ -240,6 +244,15 @@ public class HomeFragment extends Fragment implements LocationListener {
         }
 
         btngetaddress2();
+
+        String strasd = preferences.getString("TARGETVIEW_HOME","0");
+
+        if(strasd.equals("0")){
+            targetView_tvAdd();
+
+        }
+
+
 
         return v;
 
@@ -445,5 +458,127 @@ public class HomeFragment extends Fragment implements LocationListener {
         }
 
     }
+
+    public void targetView_tvAdd(){
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.tvAdd), "Add to Diary", "From here, You can add entries to your diary. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(30)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.quantum_googblue800)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_tvView();
+                    }
+                });
+    }
+
+    private void targetView_tvView() {
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.tvView), "View All Entries", "From here, You can view all entries of your diary. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(30)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.blue)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_tvToday();
+                    }
+                });
+    }
+
+    private void targetView_tvToday() {
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.tvToday), "Today's Entry", "From here, You can view today's entries of your diary. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(30)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.mdtp_accent_color_dark)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_tvMonth();
+                    }
+                });
+    }
+
+    private void targetView_tvMonth() {
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.tvMonth), "This Month Entry", "From here, You can view current munth entries of your diary. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(30)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.deep_purple_A400)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        editor.putString("TARGETVIEW_HOME","1");
+                        editor.commit();
+                        return;
+                    }
+                });
+    }
+
+
 
 }

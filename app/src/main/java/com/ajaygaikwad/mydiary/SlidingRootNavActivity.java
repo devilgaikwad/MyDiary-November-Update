@@ -28,6 +28,10 @@ import com.ajaygaikwad.mydiary.Fragments.AboutUsFragment;
 import com.ajaygaikwad.mydiary.Fragments.AddAppointmentFragment;
 import com.ajaygaikwad.mydiary.Fragments.HomeFragment;
 import com.ajaygaikwad.mydiary.Fragments.ViewAppointFragment;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -43,6 +47,7 @@ public class SlidingRootNavActivity extends AppCompatActivity {
     TextView homeTab,addToDiaryTab,viewDiaryTab,aboutTab,changeUI,logOutTab,amountBalance,amountBalanceEdit;
     String status="";
     int amounttoadd;
+    private InterstitialAd mInterstitialAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,6 +217,14 @@ public class SlidingRootNavActivity extends AppCompatActivity {
                 });
             }
         });
+
+        MobileAds.initialize(this, "ca-app-pub-3864681863166960~2667252138");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());MobileAds.initialize(this, "ca-app-pub-3864681863166960~2667252138");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     public void publicMethod() {
@@ -236,13 +249,33 @@ public class SlidingRootNavActivity extends AppCompatActivity {
     }
 
 
-
+    String i = "1";
     @Override
     public void onBackPressed() {
+
+
 
         if(slidingRootNav.isMenuOpened()){
             slidingRootNav.closeMenu();
         }else {
+
+            if(i.equals("1")){
+                MobileAds.initialize(this, "ca-app-pub-3864681863166960~2667252138");
+                mInterstitialAd = new InterstitialAd(this);
+                mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+                mInterstitialAd.setAdListener(new AdListener(){
+                    public void onAdLoaded(){
+                        mInterstitialAd.show();
+                    }
+                });
+                i="2";
+            }
+
+
+
+
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
             if (f instanceof HomeFragment) {
                 try {

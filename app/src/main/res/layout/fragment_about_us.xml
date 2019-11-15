@@ -82,7 +82,7 @@
                     android:textColor="@color/grey_90"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="February 2019" />
+                    android:text=" 15 Nov 2019" />
 
             </LinearLayout>
 
@@ -157,4 +157,5 @@
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-3864681863166960/1198898424">
     </com.google.android.gms.ads.AdView>
+
 </RelativeLayout>

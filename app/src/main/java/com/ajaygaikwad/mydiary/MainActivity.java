@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd = new InterstitialAd(this);
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         //mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build());
-        mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
+
+
+        /*mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         mInterstitialAd.setAdListener(new AdListener(){
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent in = new Intent(getApplicationContext(),RegisterActivity.class);
                 startActivity(in);
             }
-        });
+        });*/
 
         try {
             notificationHelper = new NotificationHelper(this);

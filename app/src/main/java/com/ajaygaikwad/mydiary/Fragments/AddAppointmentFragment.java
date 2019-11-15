@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -58,6 +59,7 @@ import com.ajaygaikwad.mydiary.Classes.MyApplication;
 import com.ajaygaikwad.mydiary.Classes.SharedPref;
 import com.ajaygaikwad.mydiary.MainNavActivity;
 import com.ajaygaikwad.mydiary.R;
+import com.ajaygaikwad.mydiary.SignActivity;
 import com.ajaygaikwad.mydiary.SlidingRootNavActivity;
 import com.ajaygaikwad.mydiary.WebHelper.Config;
 import com.ajaygaikwad.mydiary.db.AppDatabase;
@@ -71,6 +73,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -173,11 +177,11 @@ public class AddAppointmentFragment extends Fragment {
         mInterstitialAd.setAdUnitId("ca-app-pub-3864681863166960/6199893339");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-        mInterstitialAd.setAdListener(new AdListener(){
+        /*mInterstitialAd.setAdListener(new AdListener(){
             public void onAdLoaded(){
                 mInterstitialAd.show();
             }
-        });
+        });*/
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -376,6 +380,8 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                checkpermission();
+
                 PopupMenu popupMenu  = new PopupMenu(getActivity(),btnSelectImage);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
 
@@ -392,17 +398,17 @@ public class AddAppointmentFragment extends Fragment {
                                 return true;
                             case R.id.menuSignature:
 
-                                /*Intent in = new Intent(getActivity(), SignActivity.class);
-                                startActivity(in);*/
+                                Intent in = new Intent(getActivity(), SignActivity.class);
+                                startActivity(in);
 
-                                Fragment fragment = new SignFragment();
+                              /*  Fragment fragment = new SignFragment();
                                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 
                                 if(preferences.getString("view","").equals("2")){
                                     ft.replace(R.id.container,  fragment).addToBackStack("").commit();
                                 }else{
                                     ft.replace(R.id.fmain,  fragment).addToBackStack("").commit();
-                                }
+                                }*/
                                 return true;
                         }
 
@@ -414,10 +420,16 @@ public class AddAppointmentFragment extends Fragment {
 
             }
         });
+        String strasd = preferences.getString("TARGETVIEW","0");
 
+        if(strasd.equals("0")){
+            targetView_dateselect();
+        }
 
         return v;
     }
+
+
 
     public void showTime(int hour, int minute) {
         if (hour == 0) {
@@ -492,6 +504,13 @@ public class AddAppointmentFragment extends Fragment {
                                 btn_add.setText("Added Successfully");
                                 btn_add.setEnabled(false);
                                 nameList.add(nameAuto.getText().toString());
+
+                               /* mInterstitialAd.setAdListener(new AdListener(){
+                                public void onAdLoaded(){
+                                    mInterstitialAd.show();
+                                    }
+                                });*/
+
 
                                 editor.putString("encodedSignString","");
                                 editor.commit();
@@ -598,11 +617,13 @@ public class AddAppointmentFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         pDialog.dismissWithAnimation();
-                        mInterstitialAd.setAdListener(new AdListener(){
+
+                        /*mInterstitialAd.setAdListener(new AdListener(){
                             public void onAdLoaded(){
                                 mInterstitialAd.show();
                             }
-                        });
+                        });*/
+
                         Fragment fragment = new AddAppointmentFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         if(preferences.getString("view","").equals("2")){
@@ -653,6 +674,21 @@ public class AddAppointmentFragment extends Fragment {
             ((MainNavActivity)getActivity()).setActionBarTitle("Add to Diary");
         }catch (Exception e){
             ((SlidingRootNavActivity)getActivity()).setActionBarTitle("Add to Diary");
+        }
+
+        String encodedSignString = preferences.getString("encodedSignString","");
+        if(!encodedSignString.trim().equals(""))
+        {
+            llSignature.setVisibility(View.VISIBLE);
+            encodedProfilePhotoString = encodedSignString;
+
+            byte[] bytes = Base64.decode(encodedSignString, Base64.DEFAULT);
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            Glide.with(getActivity().getApplicationContext())
+                    .load(bitmap)
+                    //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                    .into(imageView);
         }
     }
 
@@ -939,5 +975,186 @@ public class AddAppointmentFragment extends Fragment {
         }
         return true;
     }//checkispermisison
+
+    public void targetView_dateselect(){
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.dateselect), "Select Date", "From here, You can select date of your entry, In case you forget to add entry on time then you can add back date entries also. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.quantum_googblue800)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_timeselect();
+                    }
+                });
+    }
+
+    private void targetView_timeselect() {
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.timeselect), "Select Time", "From here, You can select time of entry by default it takes current time and date. ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.blue)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_bTypeSpinner();
+                    }
+                });
+    }
+
+    private void targetView_bTypeSpinner() {
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.bTypeSpinner), "Select Type", " Credit = Credited money to your account \n Expense = Expense money from your account \n Borrow To = If you borrow money to your friend \n Borrow from = If you borrow money from your friend")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.mdtp_accent_color_dark)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_nameAuto();
+                    }
+                });
+    }
+
+    private void targetView_nameAuto() {
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.nameAuto), "To Whom", "If you credited selery then add 'Selery' \n If you expense to hotel then add 'Hotel' \n If you borrow money to friend then add friend name \n If you borrow money from your friend then add friend name ")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.deep_purple_A400)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_et_desc();
+                    }
+                });
+    }
+
+    private void targetView_et_desc() {
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.et_desc), "Description", "You can add short description about entry.")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.lime_900)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        targetView_btnSelectImage();
+                    }
+                });
+    }
+
+    private void targetView_btnSelectImage() {
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(v.findViewById(R.id.btnSelectImage), "Add Proof", "You can add image of bill as well as signature from here")
+                        // All options below are optional
+                        .outerCircleColor(R.color.red_200)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(15)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.red_400)  // Specify the color of the description text
+                        .textColor(R.color.green_800)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        editor.putString("TARGETVIEW","1");
+                        editor.commit();
+                        // This call is optional
+                        return;
+                    }
+                });
+    }
 
 }

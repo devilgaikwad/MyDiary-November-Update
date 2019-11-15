@@ -163,14 +163,14 @@ public class SignFragment extends Fragment {
         scanGallery( context,pictureFile.getAbsolutePath());
 
 
-        /*Fragment fragment = new AddAppointmentFragment();
+        Fragment fragment = new AddAppointmentFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         if(preferences.getString("view","").equals("2")){
             ft.replace(R.id.container,  fragment).addToBackStack("").commit();
         }else{
             ft.replace(R.id.fmain,  fragment).addToBackStack("").commit();
-        }*/
-        getActivity().finish();
+        }
+
 
         return pictureFile;
     }
